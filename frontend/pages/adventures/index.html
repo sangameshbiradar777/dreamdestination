@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DreamDestination Adventures</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png" />
+  <link rel="manifest" href="../../site.webmanifest" />
+  <link rel="mask-icon" href="../../safari-pinned-tab.svg" color="#5bbad5" />
+  <meta name="msapplication-TileColor" content="#da532c" />
+  <meta name="theme-color" content="#222222" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+
+<body>
+  <!-- Loader Wrapper  -->
+  <div id="loader-wrapper">
+    <div class="pulsing-6"></div>
+  </div>
+
+  <!-- Reservation statud modal -->
+  <div class="new-adventure-container">
+    <div class="adventure-modal">
+      <div class="adventure-modal-content d-flex mb-2">
+        <div class="modal-image-container">
+          <img class="new-adventure-image"
+            src="https://images.pexels.com/photos/2835562/pexels-photo-2835562.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+            alt="Adventure image">
+        </div>
+        <div class="modal-text-container d-flex flex-column justify-content-center">
+          <h5 class="mb-3 adventure-heading"><span class="new-adventure-name">East Vyfolk</span></h2>
+            <p>
+              <ion-icon class="new-adventure-icon" name="timer-outline"></ion-icon><span
+                class="new-adventure-imp new-adventure-duration">5</span> Hours long adventure
+            </p>
+            <p>
+              <ion-icon class="new-adventure-icon" name="card-outline"></ion-icon><span
+                class="new-adventure-imp new-adventure-price">₹3533</span> Per person
+            </p>
+            <p>
+              <ion-icon class="new-adventure-icon" name="location-outline"></ion-icon><span
+                class="new-adventure-imp new-adventure-category">Party</span> Category
+            </p>
+        </div>
+      </div>
+
+      <p class="new-adventure-success text-center mb-3">This adventure has been added to the list.</p>
+
+      <div class="adventure-modal-btns text-center">
+        <button class="btn btn-ok-adventure btn-outline-dark">Ok</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="page">
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-light navbar-sticky bg-light p-3">
+      <a class="navbar-brand" href="../../">DreamDestination</a>
+      <div id="city-name"></div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav d-flex justify-content-end w-100">
+          <li class="nav-item active">
+            <a class="nav-link nav-link-first" href="../../">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./reservations/">Reservations</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Content section -->
+    <div class="container pb-4">
+      <div class="content">
+        <!-- Page heading and description -->
+        <h1 class="adventure-header-title">Explore all adventures</h1>
+        <p class="adventure-header-subtitle">
+          Here's a list of places that you can explore in city
+        </p>
+        <div class="mb-2 filters-container">
+          <!-- Filters section -->
+          <div class="filter-bar d-flex align-items-center">
+            <div class="filter-bar-tile">
+              <label for="duration" class="filter-label">Filters:</label>
+            </div>
+            <!-- Duration filter (select one) -->
+            <div class="filter-bar-tile d-flex align-items-center">
+              <select class="form-control" name="duration" id="duration-select" onchange="selectDuration(event)">
+                <option disabled selected value="">
+                  Filter by Duration (Hours)
+                </option>
+                <option value="0-2">0-2 Hours</option>
+                <option value="2-6">2-6 Hours</option>
+                <option value="6-12">6-12 Hours</option>
+                <option value="12-99">12+ Hours</option>
+              </select>
+              <div class="ms-3" style="color: #0645ad; cursor: pointer" onclick="clearDuration(event)">
+                Clear
+              </div>
+            </div>
+            <!-- Category filter (select one or many) -->
+            <div class="filter-bar-tile d-flex align-items-center add-category-filter">
+              <select class="form-control" id="category-select" onchange="selectCategory(event)">
+                <option disabled selected value="">Add Category</option>
+                <option value="Cycling">Cycling Routes</option>
+                <option value="Hillside">Hillside Getaways</option>
+                <option value="Beaches">Serene Beaches</option>
+                <option value="Party">Party Spots</option>
+              </select>
+              <div class="ms-3" style="color: #0645ad; cursor: pointer" onclick="clearCategory(event)">
+                Clear
+              </div>
+            </div>
+            <!-- Add new adventure to the city -->
+            <div class="add-adventure add-adventure-primary ms-auto">
+              <button type="button" class="btn add-adventure-btn" data-toggle="tooltip" data-placement="top">
+                Add new adventure
+              </button>
+            </div>
+          </div>
+          <!-- Section to display all selected categories  -->
+          <div class="mt-4" id="category-section">
+            <div class="d-flex flex-wrap align-items-center" id="category-list"></div>
+          </div>
+        </div>
+        <!-- Display Adventures cards -->
+        <div class="row" id="data">
+          <div class="pulsing-6"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer>
+      <div class="container footer-text">© DreamDestination 2022</div>
+    </footer>
+  </div>
+
+  <!-- Loader Remover script -->
+  <script>
+    // Get the laoder and page elements from the DOM
+    const loaderElement = document.querySelector("#loader-wrapper");
+    const pageElement = document.querySelector("#page");
+
+    // Hide the entire page until the page loads
+    pageElement.style.display = "none";
+
+    // Add an event listener to the window object and show the page -
+    // when it loads entirely
+    window.addEventListener("load", () => {
+      loaderElement.style.display = "none";
+      pageElement.style.display = "block";
+    });
+  </script>
+
+  <!-- Bootstrap script -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+  <!-- Ion Icons script -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script type="module">
+    import {
+      getCityFromURL,
+      fetchAdventures,
+      addAdventureToDOM,
+      addSorryMessageToDom,
+      addNewAdventure,
+      filterByDuration,
+      filterByCategory,
+      filterFunction,
+      saveFiltersToLocalStorage,
+      getFiltersFromLocalStorage,
+      generateFilterPillsAndUpdateDOM,
+      removeFilterPillAndUpdateDOM,
+      removeAddNewAdventureBtnFunctionality,
+      addNewAdventureBtnFunctionality
+    } from "../../modules/adventures_page.js";
+
+    // Declaring global variable adventure
+    let adventures;
+    let city;
+
+    //Checks if filters are available in local storage and sets the value accordingly
+    // The structure of "filters" object is { duration : "6-10", category : [] }, which basically means duration is single-value filter and category is multi-value filter
+
+    let filters =
+      getFiltersFromLocalStorage() !== null
+        ? getFiltersFromLocalStorage()
+        : { duration: "", category: [] };
+
+    // entry point (executed when DOM is loaded)
+    (async function () {
+      // Fetches the City from URL query param (here : window.location.search is an in-built browser property that returns the query param from URL, example: http://localhost:8081/?city=bengaluru => window.location.search would return "?city=bengaluru")
+      city = getCityFromURL(window.location.search);
+
+      // Fetches the adventures for the particular city
+      adventures = await fetchAdventures(city);
+
+      // Applies filters on the adventures list
+      let filteredAdventures = filterFunction(adventures, filters);
+
+      // Check if the filteredAdventure contains any adventures
+      // If it dosent contains any adventures show the sorry Message
+      if (filteredAdventures.length) {
+        // Updates the filtered adventures list to the DOM
+        addAdventureToDOM(filteredAdventures, city);
+      } else {
+        // Show the sorry message
+        addSorryMessageToDom();
+      }
+
+      // add new adventures when the button is clicked
+      addNewAdventure(city);
+
+      // Updates the DOM with filter pills if any
+      generateFilterPillsAndUpdateDOM(filters);
+
+      // removes the selected filter and updtaes DOM
+      removeFilterPillAndUpdateDOM(adventures, filters, city);
+
+      // If any filters are applied remove the add new adventure btn functionality
+      if (filters.category.length || filters.duration) {
+        console.log(filters.category, filters.duration);
+        removeAddNewAdventureBtnFunctionality();
+      }
+    })();
+
+    //executed when onChange() is triggered on duration filter dropdown
+    function selectDuration(event) {
+      // TODO: MODULE_FILTERS
+      // 1. Change the DOM to show the selected duration filter. Use the provided input event
+      // 2. Invoke saveFiltersToLocalStorage here
+
+      // Set the innerHTML of the data element to empty
+      document.querySelector("#data").innerHTML = "";
+
+      // extract the duration using event.target.value
+      filters.duration = event.target.value;
+
+      // save filters to local storage
+      saveFiltersToLocalStorage(filters);
+
+      // get filtered adventures according to duration
+      const filteredAdventures = filterFunction(adventures, filters);
+
+      // Check if the filteredAdventure contains any advntures
+      // If it dosent contains any adventures show the sorry Message
+      if (filteredAdventures.length) {
+        // add the filtered adventures to dom
+        addAdventureToDOM(filteredAdventures, city);
+      } else {
+        // Show the sorry message
+        addSorryMessageToDom();
+      }
+
+      // Remove the add new adventure btn functionality
+      removeAddNewAdventureBtnFunctionality();
+    }
+
+    //executed when clear button is clicked on duration filter dropdown
+    function clearDuration(event) {
+      // TODO: MODULE_FILTERS
+      // 1. Change the DOM to clear the Duration filter. Refer clearCategory() below
+      // 2. Invoke saveFiltersToLocalStorage here
+
+      // get the select options of duration filter
+      const durationElement = document.querySelector("#duration-select");
+
+      // set the selectedIndex of duration select options to 0
+      durationElement.selectedIndex = 0;
+
+      // set the innerHTML of the data element to empty
+      document.querySelector("#data").innerHTML = "";
+
+      // reset the duration of filter object
+      filters.duration = "";
+
+      // Add new adventure btn functionality
+      addNewAdventureBtnFunctionality();
+
+      // save filters to local storage
+      saveFiltersToLocalStorage(filters);
+
+      // add the adventures to dom
+      addAdventureToDOM(adventures, city);
+    }
+
+    //executed when onChange() is triggered on category filter dropdown
+    function selectCategory(event) {
+      document.getElementById("data").textContent = "";
+      document.getElementById("category-list").textContent = "";
+
+      let category = event.target.value;
+      document.getElementById("category-select").selectedIndex = 0;
+
+      filters["category"].push(category);
+      filters["category"] = filters["category"].filter(onlyUnique);
+
+      generateFilterPillsAndUpdateDOM(filters);
+      let filteredAdventures = filterFunction(adventures, filters);
+
+      // Check if the filteredAdventure contains any advntures
+      // If it dosent contains any adventures show the sorry Message
+      if (filteredAdventures.length) {
+        // Add the filtered adventures to dom
+        addAdventureToDOM(filteredAdventures, city);
+      } else {
+        // Show the sorry message
+        addSorryMessageToDom();
+      }
+
+      //* Dont change the order, remove add new adventure btn functionality should be below add adventure to dom
+      // Remove add new adventure btn functionality
+      removeAddNewAdventureBtnFunctionality();
+
+      // TODO: MODULE_FILTERS
+      // 1. Invoke saveFiltersToLocalStorage here
+      saveFiltersToLocalStorage(filters);
+    }
+
+    //executed when clear button is clicked on category filter dropdown
+    function clearCategory(event) {
+      document.getElementById("data").textContent = "";
+      document.getElementById("category-list").textContent = "";
+
+      filters["category"] = [];
+      let filteredAdventures = filterFunction(adventures, filters);
+      addAdventureToDOM(filteredAdventures, city);
+
+      // Add new adventure btn functionality
+      addNewAdventureBtnFunctionality();
+
+      // TODO: MODULE_FILTERS
+      // 1. Invoke saveFiltersToLocalStorage here
+      saveFiltersToLocalStorage(filters);
+    }
+
+    //helper function
+    function onlyUnique(value, index, self) {
+      return self.indexOf(value) === index;
+    }
+
+    //registering module based functions in the DOM in order for them to work
+    window.selectDuration = selectDuration;
+    window.selectCategory = selectCategory;
+    window.clearDuration = clearDuration;
+    window.clearCategory = clearCategory;
+  </script>
+</body>
+
+</html>
