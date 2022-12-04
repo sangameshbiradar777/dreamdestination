@@ -1,5 +1,6 @@
 import config from "../conf/index.js";
 import imageURL from "../src/images/image.js";
+import { pushNewAdventure } from "./adventures_page_init.js";
 
 //Implementation to extract city from query params
 function getCityFromURL(search) {
@@ -275,13 +276,14 @@ function addNewAdventure(city, secondaryBtn = false) {
       // Convert the response to json
       const newAdventure = await adventureResponse.json();
 
-      console.log(newAdventure);
-
       // Add the newly created adventure to dom use addSingleAdventureToDom
       addSingleAdventureToDom(newAdventure);
 
       // Set new adventure details
       setNewAdventureDetails(newAdventure);
+
+      // Add new adventure to gloabl adventures variable
+      pushNewAdventure(newAdventure);
 
       // Listen for Ok event
       listenOkClick();
